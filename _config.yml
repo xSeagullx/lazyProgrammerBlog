@@ -4,7 +4,7 @@ email:       xSeagullx+lpb@example.com
 author:      Pavel Dionisev
 description: "Lifehacks for beeing lazy."
 baseurl:     ""
-url:         "localhost:4000"
+url:         "dionisev.com"
 date_format: "%b %-d, %Y"
 
 # Google services
