@@ -2,7 +2,7 @@
 layout:     post
 title:      "Git tips: To The Hotfix and Back"
 date:       2016-02-28 18:46:00
-summary:    I'm going to post a small git tricks, I use in my everyday practice.
+summary:    Git trick, that allows switching tasks without loosing context and messing with stash.
 jsUrl:      "http://cdn.rawgit.com/nicoespeon/gitgraph.js/v1.1.3/build/gitgraph.js"
 js: |
   var config = { 

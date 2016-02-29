@@ -1,20 +1,14 @@
 ---
 layout: page
-title: About Pixyll
+title: About
 permalink: /about/
 tags: about
 ---
 
-This Jekyll theme was crafted with <3 by [John Otander](http://johnotander.com)
-([@4lpine](https://twitter.com/4lpine)).
+This is a personal blog of Pavel Dionisev, M.Sc. (NRNU MEPhI) and software developer at CERN.
 
-Checkout the [Github repository](https://github.com/johnotander/pixyll) to download it,
-request a feature, report a bug, or contribute. It's free, and open source
-([MIT](http://opensource.org/licenses/MIT)).
+This blog is using Jekyll theme, created by [John Otander](http://johnotander.com)
+([@4lpine](https://twitter.com/4lpine)).  
+Theme is using ([MIT](http://opensource.org/licenses/MIT)) license and it is available at [Github repository](https://github.com/johnotander/pixyll).
 
-Thanks to the following:
-
-* [BASSCSS](http://basscss.com)
-* [Jekyll](http://jekyllrb.com)
-* [Refills](http://refills.bourbon.io/)
-* [Type Scale](http://type-scale.com/)
+All contents posted at this site is available under [MIT license](/LICENSE)
