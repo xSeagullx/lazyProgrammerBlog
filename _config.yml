@@ -1,6 +1,6 @@
 # Site settings
 title:       Lazy programer's blog
-email:       xSeagullx+lpb@example.com
+email:       xSeagullx+lpb@gmail.com
 author:      Pavel Dionisev
 description: "Lifehacks for beeing lazy."
 baseurl:     ""
@@ -90,7 +90,7 @@ text:
     email:    'Email Address'
     content:  'What would you like to say?'
     subject:  'New submission!'
-    submit:   'Say Hello'
+    submit:   'Send'
     ajax:
       sending:  'sending..'
       sent:     'Message sent!'
