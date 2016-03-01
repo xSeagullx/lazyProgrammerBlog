@@ -102,7 +102,7 @@ js: |
   }
   steps[curr]()
 
-categories: git-everyday intro
+categories: git
 ---
 
 ### What:

@@ -17,6 +17,11 @@ layout: default
               {{ post.excerpt }}
             {% endif %}
           </p>
+          <ul class="list-inline fa-ul">
+            {% for tag in post.categories %}
+            <li><i class="fa fa-tag"></i>{{ tag }}</li>
+            {% endfor %}
+          </ul>
         </div>
       {% endfor %}
     </div>

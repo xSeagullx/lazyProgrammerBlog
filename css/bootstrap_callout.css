@@ -54,3 +54,14 @@
 .bs-callout-info h4 {
     color: #5bc0de;
 }
+
+.list-inline {
+    display: table-row;
+}
+.list-inline li {
+    display: table-cell;
+    padding-left: 1em;
+}
+.list-inline i {
+    padding-right: 0.3em;
+}
