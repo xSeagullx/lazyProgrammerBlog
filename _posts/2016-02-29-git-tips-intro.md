@@ -102,7 +102,7 @@ js: |
   }
   steps[curr]()
 
-categories: git
+categories: git tips
 ---
 
 ### What:
