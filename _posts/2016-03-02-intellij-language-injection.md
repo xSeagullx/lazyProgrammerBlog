@@ -12,7 +12,7 @@ categories: intellij language-injection tips
 Sometimes you might need to edit code fragment located inside source file of another language.
 IntelliJ IDEA have a nice feature, allowing to inject custom language into given block.
 
-Imagine we want to keep CSS in xml (don't ask me why).
+Imagine we want to keep `CSS` in `XML` (don't ask me why).
 Here how it will looks. Not nice at all.
 
 ![plain xml](/assets/2016-03-02-intellij-language-injection/img1.png)  
@@ -22,7 +22,7 @@ inspections and much more!
 
 ![comment](/assets/2016-03-02-intellij-language-injection/img2.png)  
   
-If you need to make this changes global, just call a context menu, and choose "inject language or reference menu".
+If you need to make this changes global, just call a context menu, and choose __"inject language or reference menu"__.
 
 ![shortcut](/assets/2016-03-02-intellij-language-injection/img4.png)  
   
@@ -30,10 +30,10 @@ You can achieve same results with a bit more control via settings.
 
 ![menu](/assets/2016-03-02-intellij-language-injection/img3.png)  
 
-As you can see from previous screen, IDEA already have dozens of injections configured for you, use them as an inspiration.
+As you can see from previous screen, IDEA already have dozens of injections configured for you, use them as an inspiration.  
 Personally I use it when I'm editing __BPMN__ files with Groovy code inside, and xml with XPath expressions in tags.
 
 Enjoy and experiment!
 
-P.S. If it doesn't work, check that __IntelliLang__ plugin is enabled!
-More details: [in documentation](https://www.jetbrains.com/idea/help/using-language-injections.html)
+P.S. If it doesn't work, check that __IntelliLang__ plugin is enabled!  
+More details: [in documentation](https://www.jetbrains.com/idea/help/using-language-injections.html).
