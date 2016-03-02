@@ -130,33 +130,36 @@ Add it to your `~/.gitconfig` in `[alias]` section.
 
 ### Real Example:
 ```
-19:53:40 ➜  repo (unfinished_feature) ✗ g co master 
+unfinished_feature ➜ ✗ git checkout master 
 error: Your local changes to the following files would be overwritten by checkout:
         change.txt
 Please, commit your changes or stash them before you can switch branches.
 Aborting
-19:53:42 ➜  repo (unfinished_feature) ✗ 
-19:53:42 ➜  repo (unfinished_feature) ✗ g tmp
+
+unfinished_feature ➜ ✗ git tmp
 [unfinished_feature b408f65] tmp
  1 file changed, 1 insertion(+)
-19:54:23 ➜  repo (unfinished_feature) g co master
+
+unfinished_feature ➜ git checkout master
  Switched to branch 'master'
  # do your job
-19:54:40 ➜  repo (master) g co -
+
+master ➜ git checkout -
 Switched to branch 'unfinished_feature'
-19:54:54 ➜  repo (unfinished_feature) g graph
+unfinished_feature ➜ git graph
 
  * b408f65 - (HEAD -> unfinished_feature) tmp (2 minutes ago) <Pavel Dionisev>
  * b79bd19 - Commit 1 (5 minutes ago) <Pavel Dionisev>
 
-19:56:47 ➜  tmp (unfinished_feature) g utmp
-19:56:56 ➜  tmp (unfinished_feature) ✗ g st
+unfinished_feature ➜ git utmp
+
+unfinished_feature ➜ ✗ git status
 On branch unfinished_feature
 Changes to be committed:
   (use "git reset HEAD <file>..." to unstage)
 
         modified:   change.txt
 
-19:56:59 ➜  tmp (unfinished_feature) ✗ g graph
+unfinished_feature ➜ ✗ git graph
 * b79bd19 - (HEAD -> unfinished_feature) Commit 1 (6 minutes ago) <Pavel Dionisev>
 ```

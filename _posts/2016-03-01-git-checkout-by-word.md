@@ -15,39 +15,39 @@ Or select a branch same way for other operation.
 
 ### Examples:
 ```
-21:00:16 ➜  lazyProgrammerBlog (master) ✗ git br
+master ➜ ✗ git br
   example/one-name
   example/other-name
 * master
 
-21:00:32 ➜  lazyProgrammerBlog (master) ✗ git col one
+master ➜ ✗ git col one
 Switched to branch 'example/one-name'
 
-21:00:42 ➜  lazyProgrammerBlog (example/one-name) ✗ git col other
+example/one-name ➜ ✗ git col other
 Switched to branch 'example/other-name'
 
-21:01:00 ➜  lazyProgrammerBlog (example/other-name) ✗ git col name
+example/other-name ➜  ✗ git col name
 result is ambiguous
   example/one-name
 * example/other-name
 
-21:01:05 ➜  lazyProgrammerBlog (example/other-name) ✗ git col name 1
+example/other-name ➜ ✗ git col name 1
 Switched to branch 'example/one-name' 
 ```
 
 ### Just find branch name, no checkout:
 ```
-21:03:45 ➜  lazyProgrammerBlog (example/one-name) ✗ git fbl name
+example/one-name ➜ ✗ git fbl name
 example/one-name
 example/other-name
 
-21:03:56 ➜  lazyProgrammerBlog (example/one-name) ✗ git fbl name 2
+example/one-name ➜ ✗ git fbl name 2
 example/other-name
 ```
 
 ### Other usage (merge):
 ```
-21:06:25 ➜  lazyProgrammerBlog (example/one-name) git merge `git fbl name 2` -m"Merge message"
+example/one-name ➜ git merge `git fbl name 2` -m"Merge message"
 Updating d3768ab..e54ec45
 Fast-forward (no commit created; -m option ignored)
  _posts/2016-03-01-git-checkout-by-word.md | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -55,16 +55,16 @@ Fast-forward (no commit created; -m option ignored)
  create mode 100644 _posts/2016-03-01-git-checkout-by-word.md
 ```
 
-### Other usage (delete ):
+### Other usage (delete):
 ```
-21:19:13 ➜  lazyProgrammerBlog (example/one-name) ✗ g col mas
+example/one-name ➜ ✗ g col mas
 M       _posts/2016-02-29-git-tips-intro.md
 A       _posts/2016-03-01-git-checkout-by-word.md
 Switched to branch 'master'
 Your branch is up-to-date with 'origin/master'.
-21:19:32 ➜  lazyProgrammerBlog (master) ✗ g br -D `git fbl name 1`
+master ➜ ✗ g br -D `git fbl name 1`
 Deleted branch example/one-name (was d3768ab).
-21:19:38 ➜  lazyProgrammerBlog (master) ✗ g br -D `git fbl name 1`
+master ➜ ✗ g br -D `git fbl name 1`
 Deleted branch example/other-name (was e54ec45).
 ```
 
