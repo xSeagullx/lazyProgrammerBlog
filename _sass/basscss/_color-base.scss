@@ -5,15 +5,6 @@ body {
   background-color: white;
 }
 
-a {
-  color: $blue;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 pre,
 code {
   background-color: $lighter-gray;

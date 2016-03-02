@@ -8,8 +8,12 @@ layout: default
     <div class="posts">
       {% for post in paginator.posts %}
         <div class="post py3">
-          <p class="post-meta">{{ post.date | date: site.date_format }}</p>
-          <a href="{{ post.url | prepend: site.baseurl }}" class="post-link"><h3 class="h1 post-title">{{ post.title }}</h3></a>
+            {% assign post_minutes = post.content | strip_html | number_of_words | divided_by: 180 %}
+            {% if minutes == 0 %}
+            {% assign minutes = 1 %}
+            {% endif %}
+          <p class="post-meta">{{ post.date | date: site.date_format }} <span class="pull-right">{{ post_minutes }} {{ site.text.post.minute_read }}</span></p>
+          <a href="{{ post.url | prepend: site.baseurl }}" class="post-link"><h3 class="h2 post-title">{{ post.title }}</h3></a>
           <p class="post-summary">
             {% if post.summary %}
               {{ post.summary }}
@@ -19,7 +23,7 @@ layout: default
           </p>
           <ul class="list-inline fa-ul">
             {% for tag in post.categories %}
-            <li><i class="fa fa-tag"></i>{{ tag }}</li>
+            <li class="small"><i class="fa fa-tag"></i>{{ tag }}</li>
             {% endfor %}
           </ul>
         </div>
