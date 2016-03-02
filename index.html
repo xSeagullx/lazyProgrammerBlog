@@ -9,8 +9,8 @@ layout: default
       {% for post in paginator.posts %}
         <div class="post py3">
             {% assign post_minutes = post.content | strip_html | number_of_words | divided_by: 180 %}
-            {% if minutes == 0 %}
-            {% assign minutes = 1 %}
+            {% if post_minutes == 0 %}
+            {% assign post_minutes = 1 %}
             {% endif %}
           <p class="post-meta">{{ post.date | date: site.date_format }} <span class="pull-right">{{ post_minutes }} {{ site.text.post.minute_read }}</span></p>
           <a href="{{ post.url | prepend: site.baseurl }}" class="post-link"><h3 class="h2 post-title">{{ post.title }}</h3></a>
