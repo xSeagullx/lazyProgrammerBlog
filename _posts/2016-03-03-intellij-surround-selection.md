@@ -4,7 +4,7 @@ title:      "Surround selection in IntelliJ IDEA"
 date:       2016-03-03 23:49:00
 summary:    "This tiny post is all about one little feature of IDEA: surrounding selection with quotes or braces."
 
-categories: intellij language-injection tips micropost
+categories: intellij tips micropost
 ---
 
 It's pretty simple:
