@@ -40,9 +40,6 @@ js: |
 As in any version control system, in git we have a concept of __revisions__. To put it simple, revision is a tracked state of project.
 Every revision in git have it's own `sha-1` [^1] hash, and can be referenced by it. From this very simple concept we will start.
 
-* TOC
-{:toc}
-
 ### Commits
 So, what is `sha-1` hash I've mentioned? It's unique 40 character string, containing digits and english letters. In this post we don't care how we get it, let's just stick with that fact, that it's unique and used to identify particular revision.
 My last commit here is `482707027ec693dd65a9b5b5b87d0356b48b77b9`. As you can see it is very long, and cumbersome to type. But don't worry, it can be shortened to _minimal non ambiguous sequence_.
