@@ -2,8 +2,8 @@
 layout:     post
 title:      "Git revisions explained"
 date:       2016-03-15 18:46:00
-summary:    "Git has a somewhat complex set of concepts to refer a particular point in history. We have commits, branches, tags, remotes. Moe than enough to get confused!
-             I'll try clarify this by sorting out all this concepts in holistic system, connecting them together from simple to complex."
+summary:    "Git has a somewhat complex set of concepts to refer a particular point in history. We have commits, branches, tags, remotes. More than enough to get confused!
+             I'll try to clarify this by sorting out all this concepts in holistic system, connecting them together, from simple to complex."
 categories: git
 
 jsUrl:      "http://cdn.rawgit.com/nicoespeon/gitgraph.js/v1.1.3/build/gitgraph.js"
@@ -142,7 +142,7 @@ Here we have a small illustration:
 </script>
 `~2` is going 2 commits back. In case of a merge commit on the way, we follow it's first parent. Merge commit has multiple parents. `^2` is used to select one of those, going back only one step, but taking second parent.
 Again, this accessors might be used for any revision. `HEAD~1^2~2` is correct, thought somehow cryptic revision reference, going 2 commits back from current state, then one commit following second parent, and then again 3 commits back.
-If you ommit number after `~` or `^`, it will meant `~1` or `^1` respectively.
+If you omit number after `~` or `^`, it will meant `~1` or `^1` respectively.
 
 ### Referring checkouts history
 Last, but not least. Git tracks your checkout history. It's kind of alias again, accessible via `@{-N}` syntax, where `N` is the number of steps you have taken.
