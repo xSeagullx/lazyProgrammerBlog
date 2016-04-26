@@ -5,102 +5,104 @@ date:       2016-02-28 18:46:00
 summary:    Git trick, that allows switching tasks without loosing context and messing with stash.
 jsUrl:      "http://cdn.rawgit.com/nicoespeon/gitgraph.js/v1.1.3/build/gitgraph.js"
 js: |
-  var config = { 
-    colors: [ '#5cb85c', '#5bc0de', '#f0ad4e', '#d9534f',], // branches colors, 1 per column
-      branch: {
-        lineWidth: 8,
-        spacingX: 50,
-      },
-      commit: {
-        spacingY: -80,
-        dot: {
-          size: 10,
-          strokeWidth: 5,
-          strokeColor: '#000000',
+  jQuery(document).ready(function() {
+    var config = { 
+      colors: [ '#5cb85c', '#5bc0de', '#f0ad4e', '#d9534f',], // branches colors, 1 per column
+        branch: {
+          lineWidth: 8,
+          spacingX: 50,
         },
-        message: {
-          display: true,
-          displayAuthor: false,
-          displayBranch: !true,
-          displayHash: false,
-          font: "normal 12pt Arial"
+        commit: {
+          spacingY: -80,
+          dot: {
+            size: 10,
+            strokeWidth: 5,
+            strokeColor: '#000000',
+          },
+          message: {
+            display: true,
+            displayAuthor: false,
+            displayBranch: !true,
+            displayHash: false,
+            font: "normal 12pt Arial"
+          },
         },
-      },
-  };
-
-  var myTemplate = new GitGraph.Template( config );
-  function commonSetup() {
-    gitgraph = new GitGraph({
-      template: myTemplate,
-      orientation: "vertical"
-    });
-    master = gitgraph.branch("master");
-    gitgraph.commit("Master commit");
-    feature = master.branch("feature");
-  }
-
-  var curr = 0
-  function msg(str) {
-    jQuery("#gitCommand").text(curr + ". " + str)
-  }
-
-  var steps = [
-    function() {
-      commonSetup()
-      msg("Work on feature branch")
-
-      feature.commit({message: "Ongoing work", tag: "HEAD*"});
-    },
-    function() {
-      commonSetup()
-      feature.commit({message: "Ongoing work"});
-      feature.commit({message: "tmp", tag: "HEAD"});
-      msg("Apply git tmp command (working directory clean)")
-    },
-    function() {
-      commonSetup()
-      feature.commit({message: "Ongoing work"});
-      feature.commit({message: "tmp"});
-      master.commit({message: "doHotfix", tag: "HEAD"})
-      msg("Checkout hotfix branch. Work on it")
-    },
-    function() {
-      commonSetup()
-      feature.commit({message: "Ongoing work"});
-      feature.commit({message: "tmp"});
-      master.commit({message: "doHotfix"})
-      master.commit({message: "finishHotfix", tag: "HEAD"})
-      msg("Finalize hotfix")
-    },
-    function() {
-      commonSetup()
-      feature.commit({message: "Ongoing work"});
-      feature.commit({message: "tmp", tag: "HEAD"});
-      master.commit({message: "doHotfix"})
-      master.commit({message: "finishHotfix"})
-      msg("Checkout feature branch")
-    },
-    function() {
-      commonSetup()
-      feature.commit({message: "Ongoing work", tag: "HEAD*"});
-      master.commit({message: "doHotfix"})
-      master.commit({message: "finishHotfix"})
-      msg("Breakdown tmp commit")
+    };
+  
+    var myTemplate = new GitGraph.Template( config );
+    function commonSetup() {
+      gitgraph = new GitGraph({
+        template: myTemplate,
+        orientation: "vertical"
+      });
+      master = gitgraph.branch("master");
+      gitgraph.commit("Master commit");
+      feature = master.branch("feature");
     }
-  ]
-
-  gitNext = function() {
-    curr++
-    curr = curr % steps.length
+  
+    var curr = 0
+    function msg(str) {
+      jQuery("#gitCommand").text(curr + ". " + str)
+    }
+  
+    var steps = [
+      function() {
+        commonSetup()
+        msg("Work on feature branch")
+  
+        feature.commit({message: "Ongoing work", tag: "HEAD*"});
+      },
+      function() {
+        commonSetup()
+        feature.commit({message: "Ongoing work"});
+        feature.commit({message: "tmp", tag: "HEAD"});
+        msg("Apply git tmp command (working directory clean)")
+      },
+      function() {
+        commonSetup()
+        feature.commit({message: "Ongoing work"});
+        feature.commit({message: "tmp"});
+        master.commit({message: "doHotfix", tag: "HEAD"})
+        msg("Checkout hotfix branch. Work on it")
+      },
+      function() {
+        commonSetup()
+        feature.commit({message: "Ongoing work"});
+        feature.commit({message: "tmp"});
+        master.commit({message: "doHotfix"})
+        master.commit({message: "finishHotfix", tag: "HEAD"})
+        msg("Finalize hotfix")
+      },
+      function() {
+        commonSetup()
+        feature.commit({message: "Ongoing work"});
+        feature.commit({message: "tmp", tag: "HEAD"});
+        master.commit({message: "doHotfix"})
+        master.commit({message: "finishHotfix"})
+        msg("Checkout feature branch")
+      },
+      function() {
+        commonSetup()
+        feature.commit({message: "Ongoing work", tag: "HEAD*"});
+        master.commit({message: "doHotfix"})
+        master.commit({message: "finishHotfix"})
+        msg("Breakdown tmp commit")
+      }
+    ]
+  
+    gitNext = function() {
+      curr++
+      curr = curr % steps.length
+      steps[curr]()
+    }
+  
+    gitBack = function() {
+      curr--
+      curr = (curr + steps.length) % steps.length
+      steps[curr]()
+    }
     steps[curr]()
-  }
-
-  gitBack = function() {
-    curr--
-    curr = (curr + steps.length) % steps.length
-    steps[curr]()
-  }
-  steps[curr]()
+  })
 
 categories: git tips
 ---

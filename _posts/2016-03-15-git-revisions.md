@@ -4,12 +4,44 @@ title:      "Git revisions explained"
 date:       2016-03-15 18:46:00
 summary:    "Git has a somewhat complex set of concepts to refer a particular point in history. We have commits, branches, tags, remotes. Moe than enough to get confused!
              I'll try clarify this by sorting out all this concepts in holistic system, connecting them together from simple to complex."
-draft: true
 categories: git
+
+jsUrl:      "http://cdn.rawgit.com/nicoespeon/gitgraph.js/v1.1.3/build/gitgraph.js"
+js: |
+  var config = { 
+    colors: [ '#5cb85c', '#5bc0de', '#f0ad4e', '#d9534f',], // branches colors, 1 per column
+      branch: {
+        lineWidth: 8,
+        spacingX: 35,
+      },
+      commit: {
+        spacingY: -25,
+        dot: {
+          size: 8,
+          strokeWidth: 3,
+          strokeColor: '#000000',
+        },
+        message: {
+          display: true,
+          displayAuthor: false,
+          displayBranch: true,
+          displayHash: false,
+          font: "normal 10pt Arial"
+        },
+      },
+  };
+
+  var myTemplate = new GitGraph.Template( config );
+  function createGraph(id) {
+    return new GitGraph({ elementId: id, template: myTemplate, orientation: "vertical" })
+  }
 ---
 
 As in any version control system, in git we have a concept of __revisions__. To put it simple, revision is a tracked state of project.
 Every revision in git have it's own `sha-1` [^1] hash, and can be referenced by it. From this very simple concept we will start.
+
+* TOC
+{:toc}
 
 ### Commits
 So, what is `sha-1` hash I've mentioned? It's unique 40 character string, containing digits and english letters. In this post we don't care how we get it, let's just stick with that fact, that it's unique and used to identify particular revision.
@@ -43,26 +75,98 @@ Example of these commands are `show` or `cherry-pick`.
 ### HEAD
 HEAD is synthetic branch, that always points to the currently checked out revision.
 If there is no underlying branch, you are checking out, i.e. if you checkout hash, tag, or even stash entry, like `stash@{1}`, you'll end up in so-called detached HEAD state.
-As HEAD is a branch, it will progress forward as you do a commit.
+
+{% include gitGraph.html %}
+<style>
+		#gitCommand > code, #gitCommand > small { vertical-align: middle; }
+		#gitCommand > code { font-size: medium; }
+</style>
+<script>
+	var commonSetup = function() {
+		var gitgraph = createGraph("gitGraph");
+		gitgraph.branch("master");
+		return gitgraph;
+	}
+	var curr = 0;
+  var msg = function(str) {
+    jQuery("#gitCommand").html(curr + ". " + str)
+  }
+
+  var steps = [
+		function() {
+			commonSetup().commit("[HEAD] C1");
+			msg("<code>commit C1</code> <small># On master</small>")
+		},
+		function() {
+			commonSetup().commit("C1").commit("[HEAD] C2");
+			msg("<code>commit C2</code> <small># On master: Both HEAD and master moved.</small>")
+		},
+		function() {
+			commonSetup().commit("C1").commit("[HEAD] C2")
+			msg("<code>checkout C2</code> <small># Detached HEAD: No active branch for this checkout</small>")
+		},
+		function() {
+			commonSetup().commit("C1").commit("C2").branch("HEAD").commit("C3");
+			msg("<code>commit C3</code> <small># Detached HEAD: HEAD updated, master unaffected</small>")
+		},
+  ];
+  gitNext = function() {
+      curr++;
+      curr = curr % steps.length;
+      steps[curr]();
+    };
+  
+    gitBack = function() {
+      curr--;
+      curr = (curr + steps.length) % steps.length;
+      steps[curr]();
+    };
+  steps[curr]();
+</script>
+
+As a proper branch, HEAD will always progress forward as you do a commit, always pointing last one.
 To publish changes made in that state you have to create branch or tag out of it.
-
-### 2 words about remotes
-There is nothing special about remotes. Same revisions, with their own unique hashes are stored in your local git repository when you fetch changes. references to remote branches are automatically created, based on name of remote branch, and prepended with the name of remote.
-
-### Esoteric revisions
-It's also worth mentioning, that both stash and reflog are valid revisions. While stash creates actual commits,
-it provides symbolic name to it's sha `stash@{1}`. As far as I know, reflog's symbolic entry, i.e. `HEAD@{4}` is just a pointer, referring particular repository state.
 
 ### Referring parents
 Remember, that in git all revisions are interconnected. It'a graph, and every node have one or more parents. You may refer these parents using `~N` and `^N` syntax. [^2]
-Examples: `HEAD~6`, `master^2` or even `v.1.2~1^2~4`.
-Tricky part is a merge commit, as it has multiple parents. Here `~6` is going 6 commits back. If there was a merge commit on the way, we follow it's first parent. `^2` is going back only one step, but takes second parent commit (if exists).
-As you see in the last example they can be combined. Again, they might be used for any revision. `HEAD@{3}~2^2~3` is correct, thought somehow cryptic revision reference, going 2 commits back from reflog state, then one commit following second parent, and then again 3 commits back.
+Examples: `HEAD~6`, `master^2` or even `v.1.2~1^2~4`. As you see in the last example they can be combined.
+Here we have a small illustration:
+<div class="row" style="margin-top: 1em"><canvas id="gitGraphParent"></canvas></div>
+<script>
+  var gitgraph = createGraph("gitGraphParent");
+  var master = gitgraph.branch("master");
+  master.commit("C1 (HEAD~3, HEAD~1^2~2)");
+  var feature = master.branch("feature");
+  feature.commit("F1 (HEAD~1^2~1)");
+  master.commit("C2 (HEAD~2 or HEAD^^ or HEAD^~)");
+  feature.commit("F2 (HEAD~1^2 or HEAD~^2)");
+  feature.merge(master, "Merge branch 'feature' (HEAD~1 or HEAD^1)");
+  master.commit("C3 (HEAD)");
+</script>
+`~2` is going 2 commits back. In case of a merge commit on the way, we follow it's first parent. Merge commit has multiple parents. `^2` is used to select one of those, going back only one step, but taking second parent.
+Again, this accessors might be used for any revision. `HEAD~1^2~2` is correct, thought somehow cryptic revision reference, going 2 commits back from current state, then one commit following second parent, and then again 3 commits back.
+If you ommit number after `~` or `^`, it will meant `~1` or `^1` respectively.
 
 ### Referring checkouts history
-Last, but not least. Git tracks your checkout history. It's again kind of alias, accessible via `@{-N}` syntax, where `N` is the number of steps you have taken.
+Last, but not least. Git tracks your checkout history. It's kind of alias again, accessible via `@{-N}` syntax, where `N` is the number of steps you have taken.
 So, if you were checking out from `master` to `hotfix`, `git show @{-1}` will show you topmost master commit. For checkout command, there is a shortcut: `git co -` is equivalent to `git co @{-1}`.
-It's not widely known, but useful when you often move back and forth between revisions, or if you write some scripts, that need to do so.
+It's not widely known, but useful when you often move back and forth between revisions or if you write scripts/aliases, that do checkout.
+Consider following alias as an example:  
+
+```
+done = "!f() { git co master && git merge @{-1}; }; f"
+```
+
+Although it's a bit artificial, it illustrates how branch ref be used to checkout master, and merge your work in it.
+To use this alias you have to be on the feature branch you want to merge.
+
+### Two words about remotes
+There is nothing special about remotes. Same revisions, with their own unique hashes are stored in your local git repository when you fetch changes.
+References to remote branches are automatically created, based on name of remote branch, and prepended with the name of remote.
+
+### Esoteric revisions
+It's also worth mentioning, that both stash and reflog are valid revisions. Stash command creates actual commit (with proper parent),
+and provides symbolic name to it: `stash@{1}`. As far as I know, reflog's symbolic entry, i.e. `HEAD@{4}` is just a pointer, referring particular repository state.
 
 ### Holmes toolkit: `rev-parse` and `name-rev`
 And before you start experimenting remember 2 commands that will not let you get lost and always give you information about revision you need.

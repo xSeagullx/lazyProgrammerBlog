@@ -12,8 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl }}" />
 
     {% if site.enable_bootstrap %}
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" crossorigin="anonymous">
-    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" crossorigin="anonymous">
     {% endif %}
 
     <!-- Custom CSS -->
@@ -39,9 +38,13 @@
     {% endif %}
 
     {% if site.enable_jquery %}
-    <script src="//code.jquery.com/jquery-1.12.0.min.js" ></script>
-    <script>jQuery.noConflict()</script>
+      <script src="//code.jquery.com/jquery-1.12.0.min.js" ></script>
+      {% if site.enable_bootstrap %}
+        <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" crossorigin="anonymous"></script>
+      {% endif %}
+      <script>jQuery.noConflict()</script>
     {% endif %}
+    
 
     <!-- Verifications -->
     {% if site.google_verification %}
@@ -86,8 +89,8 @@
     {% endfor %}
 
     {% if page.js %}
-    <script type="text/javascript">jQuery(document).ready(function() {
-        {{ page.js }}
-    })</script>
+    <script type="text/javascript">
+      {{ page.js }}
+    </script>
     {% endif %}
 </head>
