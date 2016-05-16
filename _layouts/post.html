@@ -65,3 +65,25 @@ layout: default
     </div>
   {% endfor %}
 {% endif %}
+
+<style type="text/css">
+    .spoiler-title {
+        font-style: italic;
+    }
+</style>
+
+<script type="text/javascript">
+    var id = 0;
+    jQuery(".spoiler").html(function() {
+        var spoilerId = ("spoiler-body" + id);
+        id++;
+        var $this = jQuery( this );
+        var text = $this.text();
+        var title = $this.attr("data-title");
+        return "<div class='card'>" +
+                 "<div class='card-block'>" +
+                   "<div class='spoiler-title' data-toggle='collapse' data-target='#" + spoilerId + "'>" + title + "</div>" +
+                   "<div class='card-text collapse' id='" + spoilerId + "'><hr/>" + text + "</div>" +
+               "</div>";
+    });
+</script>
