@@ -70,6 +70,12 @@ layout: default
     .spoiler-title {
         font-style: italic;
     }
+    .spoiler-activator {
+        z-index: -1;
+    }
+    .spoiler-activator:hover > .spoiler-title {
+        text-decoration: underline;
+    }
 </style>
 
 <script type="text/javascript">
@@ -78,11 +84,11 @@ layout: default
         var spoilerId = ("spoiler-body" + id);
         id++;
         var $this = jQuery( this );
-        var text = $this.text();
+        var text = $this.html();
         var title = $this.attr("data-title");
         return "<div class='card'>" +
-                 "<div class='card-block'>" +
-                   "<div class='spoiler-title' data-toggle='collapse' data-target='#" + spoilerId + "'>" + title + "</div>" +
+                 "<div class='spoiler-activator card-block' data-toggle='collapse' data-target='#" + spoilerId + "'>" +
+                   "<div class='spoiler-title'>" + title + "</div>" +
                    "<div class='card-text collapse' id='" + spoilerId + "'><hr/>" + text + "</div>" +
                "</div>";
     });
