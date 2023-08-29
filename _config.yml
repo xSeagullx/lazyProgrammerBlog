@@ -2,9 +2,9 @@
 title:       Lazy programer's blog
 email:       xSeagullx+lpb@gmail.com
 author:      Pavel Dionisev
-description: "Lifehacks for beeing lazy."
+description: "Lifehacks for being lazy."
 baseurl:     ""
-url:         "http://dionisev.com"
+url:         "http://blog.dionisev.com"
 date_format: "%b %-d, %Y"
 
 # Google services
@@ -112,4 +112,4 @@ gems:
 # https://github.com/jekyll/jekyll/issues/2938
 exclude: [vendor]
 
-timezone: Switzerland/Geneva
+timezone: Europe/London
